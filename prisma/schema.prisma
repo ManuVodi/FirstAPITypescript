@@ -1,0 +1,85 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model autor {
+  id          Int           @id(map: "autor_pk") @default(autoincrement())
+  nome        String        @db.VarChar
+  autor_livro autor_livro[]
+}
+
+model autor_livro {
+  id_livro Int
+  id_autor Int
+  autor    autor @relation(fields: [id_autor], references: [id], onDelete: Cascade, map: "autor_fk")
+  livro    livro @relation(fields: [id_livro], references: [id], onDelete: Cascade, map: "livro_fk")
+
+  @@id([id_livro, id_autor], map: "autor_livro_pk")
+}
+
+model categoria {
+  id    Int     @id(map: "categoria_pk")
+  nome  String  @db.VarChar
+  livro livro[]
+}
+
+model editora {
+  id    Int     @id(map: "editora_pk")
+  nome  String  @db.VarChar
+  livro livro[]
+}
+
+model emprestimo {
+  id              Int      @id(map: "emprestimo_pk")
+  data_emprestimo DateTime @db.Date
+  data_entrega    DateTime @db.Date
+  prazo           DateTime @db.Date
+  id_livro        Int?
+  id_usuario      Int?
+  livro           livro?   @relation(fields: [id_livro], references: [id], map: "livro_fk")
+  usuario         usuario? @relation(fields: [id_usuario], references: [id], map: "usuario_fk")
+}
+
+model genero {
+  id            Int             @id(map: "genero_pk")
+  nome          String          @db.VarChar
+  genero_livros genero_livros[]
+}
+
+model genero_livros {
+  id_genero Int
+  id_livro  Int
+  genero    genero @relation(fields: [id_genero], references: [id], onDelete: Cascade, map: "genero_fk")
+  livro     livro  @relation(fields: [id_livro], references: [id], onDelete: Cascade, map: "livro_fk")
+
+  @@id([id_genero, id_livro], map: "genero_livros_pk")
+}
+
+model livro {
+  id                    Int             @id(map: "livro_pk") @default(autoincrement())
+  titulo                String          @db.VarChar
+  quantidade_de_paginas Decimal         @db.Decimal
+  volume                Int
+  id_editora            Int?
+  id_categoria          Int?
+  autor_livro           autor_livro[]
+  emprestimo            emprestimo[]
+  genero_livros         genero_livros[]
+  categoria             categoria?      @relation(fields: [id_categoria], references: [id], map: "categoria_fk")
+  editora               editora?        @relation(fields: [id_editora], references: [id], map: "editora_fk")
+}
+
+model usuario {
+  id         Int          @id(map: "usuario_pk")
+  nome       String       @db.VarChar
+  cpf        String       @db.VarChar
+  endereco   String       @db.VarChar
+  email      String       @db.VarChar
+  telefone   String       @db.VarChar
+  emprestimo emprestimo[]
+}
