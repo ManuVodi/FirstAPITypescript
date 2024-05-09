@@ -63,8 +63,8 @@ model genero_livros {
 model livro {
   id                    Int             @id(map: "livro_pk") @default(autoincrement())
   titulo                String          @db.VarChar
-  quantidade_de_paginas Decimal         @db.Decimal
-  volume                Int
+  quantidade_de_paginas Int
+  volume                Decimal         @db.Decimal
   id_editora            Int?
   id_categoria          Int?
   autor_livro           autor_livro[]
