@@ -23,19 +23,19 @@ model autor_livro {
 }
 
 model categoria {
-  id    Int     @id(map: "categoria_pk")
+  id    Int     @id(map: "categoria_pk") @default(autoincrement())
   nome  String  @db.VarChar
   livro livro[]
 }
 
 model editora {
-  id    Int     @id(map: "editora_pk")
+  id    Int     @id(map: "editora_pk") @default(autoincrement())
   nome  String  @db.VarChar
   livro livro[]
 }
 
 model emprestimo {
-  id              Int      @id(map: "emprestimo_pk")
+  id              Int      @id(map: "emprestimo_pk") @default(autoincrement())
   data_emprestimo DateTime @db.Date
   data_entrega    DateTime @db.Date
   prazo           DateTime @db.Date
@@ -46,7 +46,7 @@ model emprestimo {
 }
 
 model genero {
-  id            Int             @id(map: "genero_pk")
+  id            Int             @id(map: "genero_pk") @default(autoincrement())
   nome          String          @db.VarChar
   genero_livros genero_livros[]
 }
@@ -75,7 +75,7 @@ model livro {
 }
 
 model usuario {
-  id         Int          @id(map: "usuario_pk")
+  id         Int          @id(map: "usuario_pk") @default(autoincrement())
   nome       String       @db.VarChar
   cpf        String       @db.VarChar
   endereco   String       @db.VarChar
