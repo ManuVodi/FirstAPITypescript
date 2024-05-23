@@ -1,15 +1,25 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
+import prismaClient from "../../prisma";
+import { User } from "../models/interfaces/user";
 
-interface User {
-    nome: string;
-    cpf: string;
-    endereco: string;
-    email: string;
-    telefone: string;
+async function createUser(req: Request, res: Response){
+    try {
+        const {nome, cpf, endereco, email, telefone}: User = req.body;
+        const novoUsuario = await prismaClient.usuario.create({
+            data: {
+                nome,
+                cpf,
+                endereco,
+                email,
+                telefone,
+            }
+        });
+        return res.status(200).json(`Usuário cadastrado com sucesso!`)
+    }
+    catch (error) {
+        console.error(error);
+        return res.status(422).json({error: `Erro ao criar usuário`})
+    }
 }
 
-function teste(req: Request, res: Response, next: NextFunction){
-    return res.status(200).json(`Entrou no useCase`)
-}
-
-module.exports = teste;
+module.exports = createUser;
