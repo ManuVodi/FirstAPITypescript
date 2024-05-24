@@ -5,7 +5,7 @@ async function listUserController(req: Request, res: Response, next: NextFunctio
     try {
         const listaUsuarios = await prismaClient.usuario.findMany();
         if (listaUsuarios.length === 0) {
-            return res.status(200).json(`Não existem usuários cadastrados`);
+            return res.status(200).json([]);
         }
         next(); 
     }

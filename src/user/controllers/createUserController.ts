@@ -11,6 +11,13 @@ async function createUserController(req: Request, res: Response, next: NextFunct
         if (campos.find(item => typeof item !== 'string')){
                 return res.status(400).json({error: `Os campos devem ser do tipo texto`})
         }
+        if (!validateEmail(email)){
+            return res.status(400).json({error: `Email inválido`})
+        }
+        if (!validateCPF(cpf)){
+            return res.status(400).json({error: `CPF inválido`})
+        }
+
     try {
         await existEmail(req, res, next);
     }
@@ -42,9 +49,6 @@ async function existEmail(req: Request, res: Response, next: NextFunction){
 
 async function existCPF(req: Request, res: Response, next: NextFunction){
     try {
-        if (!validateCPF(req.body.cpf)) {
-            return res.status(400).json({ error: `CPF inválido` });
-        }
         const findUserByCpf = await prismaClient.usuario.findFirst({
             where: {
                 cpf: req.body.cpf
@@ -96,6 +100,11 @@ function validateCPF(cpf: string){
         return false;
     }
     return true;
+}
+
+function validateEmail(email: string){
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
 }
 
 module.exports = createUserController;
