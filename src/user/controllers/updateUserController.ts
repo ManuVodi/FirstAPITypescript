@@ -1,12 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import prismaClient from "../../prisma";
-import { error } from "console";
-
-// Validar os campos que querem ser alterados (endereco e telefone)
-// - Validar se existe o usuário
-// Validar se os novos valores serão do tipo certo 
-// Validar se os novos valores serão nulos
-// Marcar data e hora da alteração -- Use Case
+import { updateUser } from "../models/interfaces/updateUser";
 
 async function updateUserController(req: Request, res: Response, next: NextFunction){
     try{
@@ -43,8 +37,7 @@ async function validateUser(req: Request, res: Response, next: NextFunction){
             }
         })
         if(validUser){
-            // use case
-            return res.status(200).json(`Usuário Encontrado`)
+            validateCamps(req, res, next)
         }
         else {
             return res.status(404).json({error: `Usuário não encontrado`})
@@ -55,4 +48,24 @@ async function validateUser(req: Request, res: Response, next: NextFunction){
         return res.status(404).json({error: `ID não encontrado`})
     }
 }
+
+async function validateCamps(req: Request, res: Response, next: NextFunction){
+    try{
+        const {endereco, telefone}: updateUser = req.body;
+        if(typeof endereco !== 'string' || typeof telefone !== 'string'){
+            return res.status(400).json({error: `Preencha corretamente os campos`})
+        }
+        if(!endereco || !telefone){
+            return res.status(400).json({error: `Não é possível deixar os campos nulos`})
+        }
+        else {
+            next()
+        }
+    }
+    catch(error){
+        console.error(error);
+        return res.status(400).json({error: `Não foi possível verificar a entrada de dados`})
+    }
+}
+
 export {updateUserController};
