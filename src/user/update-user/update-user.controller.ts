@@ -1,31 +1,14 @@
 import { Request, Response, NextFunction } from "express";
 import { updateUser } from "../models/interfaces/update-user";
-import { validateUser } from "../validate-user/validate-user.useCase";
+import { validateParam } from "../validate-param-id/validate-param-id.useCase";
 
 async function updateUserController(req: Request, res: Response, next: NextFunction){
     try{
-        await validateParam(req, res, next);
+        await validateCamps(req, res, next);
     }
     catch(error){
         console.error(error);
         return res.status(400).json({error: `Valores inválidos`})
-    }
-}
-
-async function validateParam(req: Request, res: Response, next: NextFunction){
-    const {id} = req.params;
-    const regex = /^\d+$/;
-    try{
-        if(regex.test(id)){
-            await validateCamps(req, res, next)
-        }
-        else {
-            return res.status(400).json({error: `Parâmetro inválido`})
-        }
-    }
-    catch(error){
-        console.error(error);
-        return res.status(404).json({error: `Não foi possível encontrar o parâmetro`})
     }
 }
 
@@ -39,7 +22,7 @@ async function validateCamps(req: Request, res: Response, next: NextFunction){
             return res.status(400).json({error: `Preencha os campos`})
         }
         else {
-            validateUser(req, res, next);
+            validateParam(req, res, next);
         }
     }
     catch(error){

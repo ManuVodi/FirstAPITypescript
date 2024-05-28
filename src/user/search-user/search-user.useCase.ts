@@ -15,7 +15,7 @@ async function searchUserUseCase(req: Request, res: Response, next: NextFunction
             }
         });
         
-        return res.json(result)
+        return res.status(200).json(result)
     }
     catch(error){
         console.error(error);
