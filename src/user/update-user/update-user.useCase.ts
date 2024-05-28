@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { updateUser } from "../models/interfaces/updateUser";
+import { updateUser } from "../models/interfaces/update-user";
 import prismaClient from "../../prisma";
 
 async function updateUserUseCase(req: Request, res: Response){

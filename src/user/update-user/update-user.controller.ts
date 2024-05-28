@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { updateUser } from "../models/interfaces/updateUser";
+import { updateUser } from "../models/interfaces/update-user";
 import { validateUser } from "../validate-user/validate-user.useCase";
 
 async function updateUserController(req: Request, res: Response, next: NextFunction){
@@ -39,7 +39,7 @@ async function validateCamps(req: Request, res: Response, next: NextFunction){
             return res.status(400).json({error: `Preencha os campos`})
         }
         else {
-            validateUser;
+            validateUser(req, res, next);
         }
     }
     catch(error){
