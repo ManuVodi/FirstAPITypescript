@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import prismaClient from "../../prisma";
 
-async function listUserController(req: Request, res: Response, next: NextFunction){
+async function listUserController(_: Request, res: Response, next: NextFunction){
     try {
         const listaUsuarios = await prismaClient.usuario.findMany();
         if (listaUsuarios.length === 0) {
@@ -15,4 +15,4 @@ async function listUserController(req: Request, res: Response, next: NextFunctio
     }
 }
 
-module.exports = listUserController;
+export {listUserController};

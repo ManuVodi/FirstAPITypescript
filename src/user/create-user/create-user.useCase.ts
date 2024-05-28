@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import prismaClient from "../../prisma";
 import { User } from "../models/interfaces/user";
 
-async function createUser(req: Request, res: Response){
+async function createUserUseCase(req: Request, res: Response){
     try {
         const {nome, cpf, endereco, email, telefone}: User = req.body;
         const novoUsuario = await prismaClient.usuario.create({
@@ -22,4 +22,4 @@ async function createUser(req: Request, res: Response){
     }
 }
 
-module.exports = createUser;
+export {createUserUseCase};

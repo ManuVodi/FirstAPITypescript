@@ -107,4 +107,4 @@ function validateEmail(email: string){
     return regex.test(email);
 }
 
-module.exports = createUserController;
+export {createUserController};
