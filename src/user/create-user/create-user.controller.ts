@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import prismaClient from "../../prisma";
+import { User } from "../models/interfaces/user";
 
 async function createUserController(req: Request, res: Response, next: NextFunction) {
-        const {nome, cpf, endereco, email, telefone} = req.body; 
+        const {nome, cpf, endereco, email, telefone}: User = req.body; 
         const campos = [nome, cpf, endereco, email, telefone]
-
+        
         if (!nome || !cpf || !endereco || !email || !telefone){
             return res.status(400).json(`Preencha todos os campos`)
         }
@@ -23,7 +24,7 @@ async function createUserController(req: Request, res: Response, next: NextFunct
     }
     catch(error){
         console.error(error);
-        return res.status(400).json({error: `Não sei o que aconteceu`})
+        return res.status(400).json({error: `Não foi possível verificar os dados`})
     }
 }
 

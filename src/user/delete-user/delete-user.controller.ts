@@ -1,16 +1,13 @@
 import { Request, Response, NextFunction } from "express";
-import { validateParam } from "../validate-param-id/validate-param-id.useCase";
+import { validateParamId } from "../validate-param-id/validate-param-id.useCase";
+import { validateUser } from "../validate-user/validate-user.useCase";
 
 async function deleteUserController(req: Request, res: Response, next: NextFunction) {
+    if(!validateParamId(req, res)){
+        return;
+    }
     try{
-        const id = +req.params.id;
-        
-        if (!id){
-            return res.status(400).json({error: `Informe o ID do usuário`})
-        }
-        else {
-            validateParam(req, res, next)
-        }
+        validateUser(req, res, next)
     }
     catch(error){
         console.error(error);

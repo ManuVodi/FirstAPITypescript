@@ -5,6 +5,7 @@ import { User } from "../models/interfaces/user";
 async function createUserUseCase(req: Request, res: Response){
     try {
         const {nome, cpf, endereco, email, telefone}: User = req.body;
+        
         const novoUsuario = await prismaClient.usuario.create({
             data: {
                 nome,

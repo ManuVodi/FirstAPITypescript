@@ -8,12 +8,10 @@ async function validateUser(req: Request, res: Response, next: NextFunction){
                 id: +req.params.id
             }
         })
-        if(validUser){
-            next();
-        }
-        else {
+        if(!validUser){
             return res.status(404).json({error: `Usuário não encontrado`})
         }
+        next();
     }
     catch(error){
         console.error(error);
