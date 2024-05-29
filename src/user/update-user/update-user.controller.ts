@@ -5,17 +5,23 @@ import { validateUser } from "../validate-user/validate-user.useCase";
 
 async function updateUserController(req: Request, res: Response, next: NextFunction){
     const {endereco, telefone}: updateUser = req.body;
-    if(typeof endereco !== 'string' || typeof telefone !== 'string'){
+    
+    if(!(typeof endereco == 'string' || endereco == undefined) || 
+        !(typeof telefone == 'string' || telefone == undefined)){
         return res.status(400).json({error: `Os campos devem ser string`})
     }
-    if(!endereco || !telefone){
-        return res.status(400).json({error: `Preencha os campos`})
+    if(!endereco && !telefone){
+        return res.status(400).json({error: `Preencha ao menos um campo`})
     }
     if (!validateParamId(req, res)){
-        return;
+        return res.status(400).json({error: `Parâmetro inválido`});
     }
     try{
-        await validateUser(req, res, next)
+        const result = await validateUser(req)  
+        if (!result){ 
+            return res.status(404).json({error: `Usuário não encontrado`})
+        }
+        next()
     }
     catch(error){
         console.error(error);
