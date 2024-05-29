@@ -1,16 +1,16 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import prismaClient from "../../prisma";
 
-async function searchUserUseCase(req: Request, res: Response, next: NextFunction) {
+async function searchUserUseCase(req: Request, res: Response) {
     try{
         const {nome, endereco, email, telefone} = req.query;
         const result = await prismaClient.usuario.findMany({
             where: {
                 AND: [
-                    {nome: {contains: nome?.toString()}},
-                    {endereco: {contains: endereco?.toString()}},
-                    {email: {contains: email?.toString()}},
-                    {telefone: {contains: telefone?.toString()}}
+                    {nome: {contains: nome?.toString(), mode: 'insensitive'}},
+                    {endereco: {contains: endereco?.toString(), mode: 'insensitive'}},
+                    {email: {contains: email?.toString(), mode: 'insensitive'}},
+                    {telefone: {contains: telefone?.toString(), mode: 'insensitive'}}
                 ]
             }
         });
