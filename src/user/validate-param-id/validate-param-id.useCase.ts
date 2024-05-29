@@ -5,11 +5,7 @@ function validateParamId(req: Request, res: Response): Boolean{
     const regex = /^\d+$/;
     const valid = regex.test(id);
 
-    if(!valid){
-        res.status(400).json({error: `Parâmetro inválido`})
-        return false
-    }
-    return true
+    return valid
 }
 
 export {validateParamId};

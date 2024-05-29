@@ -7,7 +7,11 @@ async function deleteUserController(req: Request, res: Response, next: NextFunct
         return;
     }
     try{
-        validateUser(req, res, next)
+        const result = await validateUser(req)
+        if (!result){ 
+            return res.status(404).json({error: `Usuário não encontrado`})
+        }
+        next()
     }
     catch(error){
         console.error(error);

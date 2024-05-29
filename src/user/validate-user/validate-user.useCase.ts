@@ -1,21 +1,18 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response } from "express";
 import prismaClient from "../../prisma";
 
-async function validateUser(req: Request, res: Response, next: NextFunction){
+async function validateUser(req: Request){
     try{
         const validUser = await prismaClient.usuario.findFirst({
             where: {
                 id: +req.params.id
             }
         })
-        if(!validUser){
-            return res.status(404).json({error: `Usuário não encontrado`})
-        }
-        next();
+        const valid = validUser ? true : false;
+        return valid;        
     }
     catch(error){
-        console.error(error);
-        return res.status(404).json({error: `ID não encontrado`})
+        return false 
     }
 }
 
