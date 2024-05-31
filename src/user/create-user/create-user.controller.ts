@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import prismaClient from "../../prisma";
 import { User } from "../models/interfaces/user";
+import prismaClient from "../../prisma";
 
 async function createUserController(req: Request, res: Response, next: NextFunction) {
         const {nome, cpf, endereco, email, telefone}: User = req.body; 
@@ -20,7 +20,15 @@ async function createUserController(req: Request, res: Response, next: NextFunct
         }
 
     try {
-        await existEmail(req, res, next);
+        const dontExistEmail = await existEmail(req); 
+        const dontExistCPF = await existCPF(req);
+        if(!dontExistEmail){
+            return res.status(400).json({error: `Email já cadastrado`})
+        }
+        if(!dontExistCPF){
+            return res.status(400).json({error: `CPF já cadastrado`})
+        }
+        next()
     }
     catch(error){
         console.error(error);
@@ -28,43 +36,31 @@ async function createUserController(req: Request, res: Response, next: NextFunct
     }
 }
 
-async function existEmail(req: Request, res: Response, next: NextFunction){
+async function existEmail(req: Request){
     try {
         const findEmailByUser = await prismaClient.usuario.findFirst({
             where: {
                 email: req.body.email
             }
         })
-        if (findEmailByUser){
-            return res.status(400).json({error: `Email já cadastrado`})
-        }
-        else {
-            await existCPF(req, res, next);
-        }
+        return !findEmailByUser
     }
     catch(error){
-        console.error(error);
-        return res.status(400).json({error: `Não foi possível verificar o seu email`})
+        return false
     }
 }
 
-async function existCPF(req: Request, res: Response, next: NextFunction){
+async function existCPF(req: Request){
     try {
         const findUserByCpf = await prismaClient.usuario.findFirst({
             where: {
                 cpf: req.body.cpf
             }
         })
-        if (findUserByCpf) {
-            return res.status(400).json(`CPF já existente`)
-        }
-        else {
-            next();
-        }
+        return !findUserByCpf
     }
     catch(error){
-        console.error(error);
-        return res.status(400).json({error: `Não foi possível verificar seu CPF`})
+        return false
     }
 }
 

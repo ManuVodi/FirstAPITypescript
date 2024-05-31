@@ -6,7 +6,7 @@ async function createUserUseCase(req: Request, res: Response){
     try {
         const {nome, cpf, endereco, email, telefone}: User = req.body;
         
-        const novoUsuario = await prismaClient.usuario.create({
+        await prismaClient.usuario.create({
             data: {
                 nome,
                 cpf,
