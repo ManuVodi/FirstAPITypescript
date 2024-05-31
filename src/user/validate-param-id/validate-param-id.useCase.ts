@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 
-function validateParamId(req: Request, res: Response): Boolean{
+function validateParamId(req: Request): Boolean{
     const {id} = req.params;
     const regex = /^\d+$/;
     const valid = regex.test(id);
@@ -8,4 +8,4 @@ function validateParamId(req: Request, res: Response): Boolean{
     return valid
 }
 
-export {validateParamId};
+export { validateParamId };
