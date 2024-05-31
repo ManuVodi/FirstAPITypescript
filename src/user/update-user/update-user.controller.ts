@@ -6,14 +6,16 @@ import { validateUser } from "../validate-user/validate-user.useCase";
 async function updateUserController(req: Request, res: Response, next: NextFunction){
     const {endereco, telefone}: updateUser = req.body;
     
-    if(!(typeof endereco == 'string' || endereco == undefined) || 
-        !(typeof telefone == 'string' || telefone == undefined)){
+    if(!(typeof endereco == 'string' || !endereco) || 
+        !(typeof telefone == 'string' || !telefone)){
         return res.status(400).json({error: `Os campos devem ser string`})
     }
+
     if(!endereco && !telefone){
         return res.status(400).json({error: `Preencha ao menos um campo`})
     }
-    if (!validateParamId(req, res)){
+    
+    if (!validateParamId(req)){
         return res.status(400).json({error: `Parâmetro inválido`});
     }
     try{

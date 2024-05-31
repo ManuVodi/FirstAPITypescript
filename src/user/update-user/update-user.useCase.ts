@@ -6,7 +6,7 @@ async function updateUserUseCase(req: Request, res: Response){
     try{
         const {endereco, telefone}: updateUser = req.body;
 
-        const newUpdate = await prismaClient.usuario.update({
+        await prismaClient.usuario.update({
             where: {
                 id: +req.params.id
             },
