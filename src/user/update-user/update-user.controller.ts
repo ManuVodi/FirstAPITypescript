@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { updateUser } from "../models/interfaces/update-user";
-import { validateParamId } from "../validate-param-id/validate-param-id.useCase";
+import { validateParamId } from "../validate-param-id-user/validate-param-id-user.useCase";
 import { validateUser } from "../validate-user/validate-user.useCase";
 
 // Preciso que quando o campo estiver UNDEFINED não tente por o "trim()" nele mas quando existir, coloque

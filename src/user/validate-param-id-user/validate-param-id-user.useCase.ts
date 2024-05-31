@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-function validateParamId(req: Request): Boolean{
+function validateParamIdUser(req: Request): Boolean{
     const {id} = req.params;
     const regex = /^\d+$/;
     const valid = regex.test(id);
@@ -8,4 +8,4 @@ function validateParamId(req: Request): Boolean{
     return valid
 }
 
-export { validateParamId };
+export { validateParamIdUser };
