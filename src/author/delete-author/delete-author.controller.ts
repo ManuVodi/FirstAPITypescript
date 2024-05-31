@@ -1,14 +1,14 @@
 import { Request, Response, NextFunction } from "express";
-import { validateParamAuthorId } from "../validate-param-id/validate-param-id.useCase";
-import { validateAuthorId } from "../validate-author/validate-author.useCase";
+import { validateParamIdAuthor } from "../validate-param-id-author/validate-param-id-author.useCase";
+import { validateAuthor } from "../validate-author/validate-author.useCase";
 
 async function deleteAuthorController(req: Request, res: Response, next: NextFunction){
     try{
-        const isValidParam = await validateParamAuthorId(req);
+        const isValidParam = await validateParamIdAuthor(req);
         if(!isValidParam){
             return res.status(400).json({error: `Parâmetro inválido`});
         }
-        const existId = await validateAuthorId(req);
+        const existId = await validateAuthor(req);
         if(!existId){
             return res.status(400).json({error: `Author não encontrado`}) 
         }
