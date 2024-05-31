@@ -6,16 +6,16 @@ async function createUserController(req: Request, res: Response, next: NextFunct
         const {nome, cpf, endereco, email, telefone}: User = req.body; 
         const campos = [nome, cpf, endereco, email, telefone]
         
-        if (!nome || !cpf || !endereco || !email || !telefone){
-            return res.status(400).json(`Preencha todos os campos`)
-        }
         if (campos.find(item => typeof item !== 'string')){
                 return res.status(400).json({error: `Os campos devem ser do tipo texto`})
         }
-        if (!validateEmail(email)){
+        if (campos.find(item => !item.trim())){
+            return res.status(400).json(`Preencha todos os campos`)
+        }
+        if (!validateEmail(email.trim())){
             return res.status(400).json({error: `Email inválido`})
         }
-        if (!validateCPF(cpf)){
+        if (!validateCPF(cpf.trim())){
             return res.status(400).json({error: `CPF inválido`})
         }
 
