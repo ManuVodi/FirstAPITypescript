@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-async function validateParamIdAuthor(req: Request){
+function validateParamIdAuthorUseCase(req: Request){
     const param = req.params.id;
     const regex = /^\d+$/;
     const valid = regex.test(param)
@@ -9,4 +9,4 @@ async function validateParamIdAuthor(req: Request){
     
 }
 
-export {validateParamIdAuthor}
+export {validateParamIdAuthorUseCase}
