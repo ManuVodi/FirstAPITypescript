@@ -19,7 +19,7 @@ async function createUserUseCase(req: Request, res: Response){
     }
     catch (error) {
         console.error(error);
-        return res.status(422).json({error: `Erro ao criar usuário`})
+        return res.status(422).json({error: `Não foi possível cadastrar o usuário`})
     }
 }
 

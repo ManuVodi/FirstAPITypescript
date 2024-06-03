@@ -1,9 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { updateUser } from "../models/interfaces/update-user";
-import { validateParamId } from "../validate-param-id-user/validate-param-id-user.useCase";
-import { validateUser } from "../validate-user/validate-user.useCase";
-
-// Preciso que quando o campo estiver UNDEFINED não tente por o "trim()" nele mas quando existir, coloque
+import { validateParamIdUserUseCase } from "../validate-param-id-user/validate-param-id-user.useCase";
+import { validateUserUseCase } from "../validate-user/validate-user.useCase";
 
 async function updateUserController(req: Request, res: Response, next: NextFunction){
     const {endereco, telefone}: updateUser = req.body;
@@ -13,31 +11,31 @@ async function updateUserController(req: Request, res: Response, next: NextFunct
     }
 
     if (endereco){
-        const noSpaceAdress = endereco.trim()
         if (typeof endereco !== 'string') {
             return res.status(400).json({error: `O campo endereço deve ser string`})
         }
+        const noSpaceAdress = endereco.trim()
         if (!noSpaceAdress) {
             return res.status(400).json({error: "O campo endereço não pode ser vazio"})
         }
     }
 
     if(telefone){
-        const noSpaceNumber = telefone.trim()
         if (typeof telefone !== 'string') {
             return res.status(400).json({error: `O campo telefone deve ser string`})
         }
+        const noSpaceNumber = telefone.trim()
         if (!noSpaceNumber) {
             return res.status(400).json({error: "O campo telefone não pode ser vazio"})
         }
     }
 
     
-    if (!validateParamId(req)){
+    if (!validateParamIdUserUseCase(req)){
         return res.status(400).json({error: `Parâmetro inválido`});
     }
     try{
-        const result = await validateUser(req)  
+        const result = await validateUserUseCase(req)  
         if (!result){ 
             return res.status(404).json({error: `Usuário não encontrado`})
         }

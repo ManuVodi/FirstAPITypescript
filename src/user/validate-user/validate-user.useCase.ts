@@ -1,7 +1,7 @@
 import { Request } from "express";
 import prismaClient from "../../prisma";
 
-async function validateUser(req: Request){
+async function validateUserUseCase(req: Request){
     const validUser = await prismaClient.usuario.findFirst({
         where: {
             id: +req.params.id
@@ -10,4 +10,4 @@ async function validateUser(req: Request){
     return validUser ? true : false;
 }
 
-export {validateUser};
+export {validateUserUseCase};
