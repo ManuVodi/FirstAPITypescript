@@ -1,7 +1,7 @@
 import { Request } from "express";
 import prismaClient from "../../prisma";
 
-async function validateGender(req: Request){
+async function validateGenderUseCase(req: Request){
     const valid = await prismaClient.genero.findFirst({
         where: {
             id: +req.params.id
@@ -10,4 +10,4 @@ async function validateGender(req: Request){
     return valid ? true : false;
 }
 
-export {validateGender}
+export {validateGenderUseCase}

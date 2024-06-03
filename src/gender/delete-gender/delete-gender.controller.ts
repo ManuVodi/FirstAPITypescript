@@ -1,14 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { validateParamIdCategory } from "../../category/validate-param-id-category/validate-param-id-category.useCase";
-import { validateGender } from "../validate-gender/validate-gender.useCase";
+import { validateParamIdGenderUseCase } from "../validate-param-id-gender/validate-param-id-gender.useCase";
+import { validateGenderUseCase } from "../validate-gender/validate-gender.useCase";
 
 async function deleteGenderController(req: Request, res: Response, next: NextFunction){
+    if(!validateParamIdGenderUseCase(req)){
+        return res.status(400).json({error: `Parâmetro inválido`})
+    }
     try{
-        const validParam = await validateParamIdCategory(req);
-        if(!validParam){
-            return res.status(400).json({error: `Parâmetro inválido`})
-        }
-        const validGender = await validateGender(req);
+        const validGender = await validateGenderUseCase(req);
         if(!validGender){
             return res.status(400).json({error: `Gênero não encontrado`})
         }

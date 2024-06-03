@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 
-async function validateParamIdGender(req: Request, res: Response){
+function validateParamIdGenderUseCase(req: Request){
     const param = req.params.id;
     const regex = /^\d+$/;
     const valid = regex.test(param);
@@ -8,4 +8,4 @@ async function validateParamIdGender(req: Request, res: Response){
     return valid;
 }
 
-export {validateParamIdGender}
+export {validateParamIdGenderUseCase}
