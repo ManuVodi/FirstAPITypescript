@@ -1,7 +1,7 @@
 import { Request } from "express";
 import prismaClient from "../../prisma";
 
-async function validateCategory(req: Request){
+async function validateCategoryUseCase(req: Request){
     const valid = await prismaClient.categoria.findFirst({
         where: {
             id: +req.params.id
@@ -11,4 +11,4 @@ async function validateCategory(req: Request){
     return valid ? true : false;
 }
 
-export {validateCategory}
+export {validateCategoryUseCase}

@@ -1,6 +1,6 @@
 import { Request } from "express";
 
-async function validateParamIdCategory(req: Request){
+function validateParamIdCategoryUseCase(req: Request){
     const param = req.params.id;
     const regex = /^\d+$/;
     const valid = regex.test(param)
@@ -8,4 +8,4 @@ async function validateParamIdCategory(req: Request){
     return valid;
 }
 
-export {validateParamIdCategory}
+export {validateParamIdCategoryUseCase}
