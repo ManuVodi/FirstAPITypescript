@@ -3,11 +3,12 @@ import { validateAuthorUseCase } from "../validate-author/validate-author.useCas
 import { validateParamIdAuthorUseCase } from "../validate-param-id-author/validate-param-id-author.useCase";
 
 async function deleteAuthorController(req: Request, res: Response, next: NextFunction){
-    if(!validateParamIdAuthorUseCase(req)){
+    const id = req.params.id
+    if(!validateParamIdAuthorUseCase(id)){
         return res.status(400).json({error: `Parâmetro inválido`});
     }
     try{
-        const existId = await validateAuthorUseCase(req);
+        const existId = await validateAuthorUseCase(+id);
         if(!existId){
             return res.status(400).json({error: `Author não encontrado`}) 
         }

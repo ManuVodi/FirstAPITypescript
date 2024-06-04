@@ -1,10 +1,10 @@
 import { Request } from "express";
 import prismaClient from "../../prisma";
 
-async function validateAuthorUseCase(req: Request){
+async function validateAuthorUseCase(id: number){
     const findAuthor = await prismaClient.autor.findFirst({
         where: {
-            id: +req.params.id
+            id: id
         }
     })
     return findAuthor ? true : false;
