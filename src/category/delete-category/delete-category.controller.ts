@@ -3,11 +3,12 @@ import { validateParamIdCategoryUseCase } from "../validate-param-id-category/va
 import { validateCategoryUseCase } from "../validate-category/validate-category.useCase";
 
 async function deleteCategoryController(req: Request, res: Response, next: NextFunction){
-    if(!validateParamIdCategoryUseCase(req)){
+    const id = req.params.id
+    if(!validateParamIdCategoryUseCase(id)){
         return res.status(400).json({error: `Parâmetro inválido`})
     }
     try {   
-        const validId = await validateCategoryUseCase(req)
+        const validId = await validateCategoryUseCase(+id)
         if(!validId){
             return res.status(400).json({error: `Categoria não encontrada`})
         }
