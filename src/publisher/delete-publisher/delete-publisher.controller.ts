@@ -3,11 +3,12 @@ import { validateParamIdPublisherUseCase } from "../validate-param-id-publisher/
 import { validatePublisherUseCase } from "../validate-publisher/validate-publisher.useCase";
 
 async function deletePublisherController(req: Request, res: Response, next: NextFunction){
-    if(!validateParamIdPublisherUseCase(req)){
+    const id = req.params.id
+    if(!validateParamIdPublisherUseCase(id)){
         return res.status(400).json({error: `Parâmetro inválido`})
     }
     try{
-        const validId = await validatePublisherUseCase(req);
+        const validId = await validatePublisherUseCase(+id);
         if(!validId){
             return res.status(400).json({error: `Editora não encontrada`})
         }

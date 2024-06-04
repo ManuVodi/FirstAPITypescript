@@ -1,9 +1,6 @@
-import { Request } from "express";
-
-function validateParamIdPublisherUseCase(req: Request){
-    const param = req.params.id;
+function validateParamIdPublisherUseCase(id: string){
     const regex = /^\d+$/;
-    const valid = regex.test(param)
+    const valid = regex.test(id)
 
     return valid
 }

@@ -3,10 +3,9 @@ import prismaClient from "../../prisma";
 
 async function createPublisherUseCase(req: Request, res: Response){
     try{
-        const {nome} = req.body;
         await prismaClient.editora.create({
             data: {
-                nome: nome
+                nome: req.body.nome
             }
         })
         return res.status(200).json(`Editora cadastrada!`)

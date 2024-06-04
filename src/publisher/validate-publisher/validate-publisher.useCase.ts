@@ -1,10 +1,9 @@
-import { Request,  } from "express";
 import prismaClient from "../../prisma";
 
-async function validatePublisherUseCase(req: Request){
+async function validatePublisherUseCase(id: number){
     const findPublisher = await prismaClient.editora.findFirst({
         where: {
-            id: +req.params.id
+            id: id
         }
     })
     return findPublisher ? true: false;
