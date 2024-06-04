@@ -3,10 +3,9 @@ import prismaClient from "../../prisma";
 
 async function deleteUserUseCase(req: Request, res: Response) {
     try{
-        const id = +req.params.id;
         await prismaClient.usuario.delete({
             where: {
-                id: id
+                id: +req.params.id
             }
         });
 

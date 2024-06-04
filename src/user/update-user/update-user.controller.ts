@@ -30,12 +30,12 @@ async function updateUserController(req: Request, res: Response, next: NextFunct
         }
     }
 
-    
-    if (!validateParamIdUserUseCase(req)){
+    const id = req.params.id
+    if (!validateParamIdUserUseCase(id)){
         return res.status(400).json({error: `Parâmetro inválido`});
     }
     try{
-        const result = await validateUserUseCase(req)  
+        const result = await validateUserUseCase(+id)  
         if (!result){ 
             return res.status(404).json({error: `Usuário não encontrado`})
         }

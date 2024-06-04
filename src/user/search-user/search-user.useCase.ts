@@ -6,10 +6,22 @@ async function searchUserUseCase(req: Request, res: Response) {
         const {nome, endereco, email, telefone} = req.query;
         const result = await prismaClient.usuario.findMany({
             where: {
-                nome: {contains: nome?.toString(), mode: 'insensitive'},
-                endereco: {contains: endereco?.toString(), mode: 'insensitive'},
-                email: {contains: email?.toString(), mode: 'insensitive'},
-                telefone: {contains: telefone?.toString(), mode: 'insensitive'}
+                nome: {
+                    contains: nome?.toString(), 
+                    mode: 'insensitive'
+                },
+                endereco: {
+                    contains: endereco?.toString(), 
+                    mode: 'insensitive'
+                },
+                email: {
+                    contains: email?.toString(), 
+                    mode: 'insensitive'
+                },
+                telefone: {
+                    contains: telefone?.toString(), 
+                    mode: 'insensitive'
+                }
             }
         });
         

@@ -3,11 +3,12 @@ import { validateParamIdUserUseCase } from "../validate-param-id-user/validate-p
 import { validateUserUseCase } from "../validate-user/validate-user.useCase";
 
 async function deleteUserController(req: Request, res: Response, next: NextFunction) {
-    if(!validateParamIdUserUseCase(req)){
+    const id = req.params.id
+    if(!validateParamIdUserUseCase(id)){
         return res.status(400).json({error: `Parâmetro Inválido`});
     }
     try{
-        const existUser = await validateUserUseCase(req)
+        const existUser = await validateUserUseCase(+id)
         if (!existUser){ 
             return res.status(404).json({error: `Usuário não encontrado`})
         }
