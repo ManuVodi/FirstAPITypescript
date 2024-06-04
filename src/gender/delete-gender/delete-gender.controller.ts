@@ -3,11 +3,12 @@ import { validateParamIdGenderUseCase } from "../validate-param-id-gender/valida
 import { validateGenderUseCase } from "../validate-gender/validate-gender.useCase";
 
 async function deleteGenderController(req: Request, res: Response, next: NextFunction){
-    if(!validateParamIdGenderUseCase(req)){
+    const id = req.params.id
+    if(!validateParamIdGenderUseCase(id)){
         return res.status(400).json({error: `Parâmetro inválido`})
     }
     try{
-        const validGender = await validateGenderUseCase(req);
+        const validGender = await validateGenderUseCase(+id);
         if(!validGender){
             return res.status(400).json({error: `Gênero não encontrado`})
         }

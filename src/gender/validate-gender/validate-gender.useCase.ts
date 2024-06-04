@@ -1,10 +1,9 @@
-import { Request } from "express";
 import prismaClient from "../../prisma";
 
-async function validateGenderUseCase(req: Request){
+async function validateGenderUseCase(id: number){
     const valid = await prismaClient.genero.findFirst({
         where: {
-            id: +req.params.id
+            id: id
         }
     })
     return valid ? true : false;
