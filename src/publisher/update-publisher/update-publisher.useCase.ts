@@ -9,7 +9,7 @@ async function updatePublisherUseCase(req: Request, res: Response){
                 id: +req.params.id
             },
             data: {
-                nome: nome
+                nome: nome.trim().toUpperCase()
             }
         })
         return res.status(200).json(`Editora atualizada!`)

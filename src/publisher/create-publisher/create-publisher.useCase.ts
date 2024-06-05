@@ -6,7 +6,7 @@ async function createPublisherUseCase(req: Request, res: Response){
         const {nome} = req.body;
         await prismaClient.editora.create({
             data: {
-                nome: nome
+                nome: nome.trim().toUpperCase()
             }
         })
         return res.status(200).json(`Editora cadastrada!`)
