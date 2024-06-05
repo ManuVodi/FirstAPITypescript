@@ -6,7 +6,7 @@ async function createGenderUseCase(req: Request, res: Response){
         const {nome} = req.body;
         await prismaClient.genero.create({
             data: {
-                nome: nome
+                nome: nome.trim().toUpperCase()
             }
         })
         return res.status(200).json(`Gênero cadastrado!`)

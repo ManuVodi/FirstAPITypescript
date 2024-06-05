@@ -9,7 +9,7 @@ async function updateGenderUseCase(req: Request, res: Response){
                 id: +req.params.id
             },
             data: {
-                nome: nome
+                nome: nome.trim().toUpperCase()
             }
         })
         return res.status(200).json({error: `Gênero atualizado!`})
