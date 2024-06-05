@@ -6,7 +6,7 @@ async function createAuthorUseCase(req: Request, res: Response){
         const nome = req.body.nome;
         await prismaClient.autor.create({
                 data: {
-                    nome
+                    nome: nome.trim().toUpperCase()
                 }
             })
         return res.status(200).json(`Autor cadastrado!`)
