@@ -11,7 +11,7 @@ async function updateUserUseCase(req: Request, res: Response){
                 id: +req.params.id
             },
             data: {
-                endereco,
+                endereco: endereco.trim().toUpperCase(),
                 telefone,
             }
         });

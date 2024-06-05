@@ -8,9 +8,9 @@ async function createUserUseCase(req: Request, res: Response){
         
         await prismaClient.usuario.create({
             data: {
-                nome,
+                nome: nome.trim().toUpperCase(),
                 cpf,
-                endereco,
+                endereco: endereco.trim().toUpperCase(),
                 email,
                 telefone,
             }
