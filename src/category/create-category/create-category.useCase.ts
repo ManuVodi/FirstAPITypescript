@@ -6,7 +6,7 @@ async function createCategoryUseCase(req: Request, res: Response){
         const {nome} = req.body;
         await prismaClient.categoria.create({
             data: {
-                nome: nome
+                nome: nome.trim().toUpperCase()
             }
         })
         return res.status(400).json(`Categoria cadastrada!`)
