@@ -5,6 +5,7 @@ const authorRoute = require('./author/routes/author-route');
 const categoryRoute = require('./category/routes/category-route');
 const genderRoute = require('./gender/routes/gender-route');
 const publisherRoute = require('./publisher/routes/publisher-route');
+const bookRoute = require('./book/routes/book-route')
 
 const app = express();
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(authorRoute);
 app.use(categoryRoute);
 app.use(genderRoute);
 app.use(publisherRoute);
+app.use(bookRoute);
 
 app.listen(PORT, () => {
     console.log(`O servidor está ouvindo na porta ${PORT}`);
