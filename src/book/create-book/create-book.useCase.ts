@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import prismaClient from "../../prisma";
-import { Book } from "../models/interfaces/create-book";
-import { authorBookUseCase } from "../../author-book/author-book.useCase";
-import { genderBookUseCase } from "../../gender-book/gender-book.useCase";
+import { Book } from "../models/interfaces/book";
+import { createRelationAuthorBookUseCase } from "../../author-book/create-relation-author-book/create-relation-author-book.useCase";
+import { createRelationGenderBookUseCase } from "../../gender-book/create-relation-gender-book/create-relation-gender-book.useCase";
 
 async function createBookUseCase(req: Request, res: Response){
     try{
         const {titulo, quantidade_de_paginas, volume, id_editora, id_categoria}: Book = req.body
-        const arrayIdAuthor: number[] = req.body.id_autor
-        const arrayIdGender: number[] = req.body.id_genero
+        let arrayIdAuthor: number[] = req.body.id_autor
+        let arrayIdGender: number[] = req.body.id_genero
         
         const newBook = await prismaClient.livro.create({
             data: {
@@ -20,13 +20,15 @@ async function createBookUseCase(req: Request, res: Response){
             }
         })
         if(newBook){
+            arrayIdAuthor = [...new Set(arrayIdAuthor)];
             for(let id of arrayIdAuthor){
-                const createRelationAuthor = await authorBookUseCase(id, newBook.id)
+                const createRelationAuthor = await createRelationAuthorBookUseCase(id, newBook.id)
                 console.log(createRelationAuthor);
             }
     
             for(let id of arrayIdGender){
-                const createRelationGender = await genderBookUseCase(id, newBook.id)
+                arrayIdGender = [...new Set(arrayIdGender)];
+                const createRelationGender = await createRelationGenderBookUseCase(id, newBook.id)
                 console.log(createRelationGender);
             }
             return res.status(200).json(`Livro cadastrado!`)
