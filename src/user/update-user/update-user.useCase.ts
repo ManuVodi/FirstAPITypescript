@@ -5,13 +5,12 @@ import prismaClient from "../../prisma";
 async function updateUserUseCase(req: Request, res: Response){
     try{
         const {endereco, telefone}: updateUser = req.body;
-
         await prismaClient.usuario.update({
             where: {
                 id: +req.params.id
             },
             data: {
-                endereco: endereco.trim().toUpperCase(),
+                ...(endereco && {endereco: endereco.trim().toUpperCase()}),
                 telefone,
             }
         });

@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import { User } from "../models/interfaces/user";
 import prismaClient from "../../prisma";
 
+// Se eu colocar "teste" no lugar do "cpf" com todos os dados corretos,  dá erro (12) pois tenta ler um dado undefined
+
 async function createUserController(req: Request, res: Response, next: NextFunction) {
         const {nome, cpf, endereco, email, telefone}: User = req.body; 
         const campos = [nome, cpf, endereco, email, telefone]
