@@ -1,8 +1,10 @@
-function validateTypeBook(campsNumber: number[], titulo: string, id_autor: number[], id_genero: number[]){
+function validateTypeBook(campsNumber: number[], titulo: string, arrayIdAuthor: number[], arrayIdGender: number[]){
     return campsNumber.find(
         item => typeof item !== 'number') || 
         typeof titulo !== 'string' ||
-        typeof (id_autor || id_genero) !== 'object' 
+        typeof (arrayIdAuthor || arrayIdGender) !== 'object' ||
+        arrayIdAuthor.find(item => typeof item !== 'number') ||
+        arrayIdGender.find(item => typeof item !== 'number')
         ? false : true
 }
 
